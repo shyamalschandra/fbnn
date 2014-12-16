@@ -1,0 +1,242 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>fbnn - Documentation</title>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea'],
+          displayMath: [['$${', '}$$']],
+          inlineMath: [['${', '}$']]
+      }
+  });
+  MathJax.Hub.Queue(function() {
+      // Fix <code> tags after MathJax finishes running. This is a
+      // hack to overcome a shortcoming of Markdown. Discussion at
+      // https://github.com/mojombo/jekyll/issues/199
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i = 0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        $('pre code').each(function(i, e) {
+            var par = $(e).closest('pre');
+            if (! $(par).hasClass('has-jax')) {
+                hljs.highlightBlock(e);
+            }
+        });
+    });
+</script>
+
+
+
+<script src="../search.js"></script>
+<script type="text/javascript"> addSearchFormHeader(); </script>
+<script type="text/javascript">
+$(document).ready(function() {
+    /* Fix up any badly formed anchors */
+    $("a").each(function(i, e) {
+        if (!e.href) {
+            $(e).addClass('anchor');
+            var inner = $(e).html();
+            $(e).html("");
+            $(e).after(inner);
+        }
+    })
+})
+</script>
+</head>
+<body>
+<header>
+<ul>Navigation:
+<li><a href="../index.html">research-docs</a></li>
+<li><a href="https://github.com/facebook/fbnn">fbnn github</a></li>
+<li><a href="#">top of this page</a></li>
+</ul>
+</header>
+<div class="wrapper">
+<div id="navcontainer"><ul>
+<li>
+<ul>
+<li><a href="#fbnn.README.`fbnn`">`fbnn`</a>
+    <ul>
+    <li><a href="#fbnn.README.License">License</a></li>
+    </ul>
+</li>
+</ul>
+</li>
+<hr>
+       <li><a href="#fbnn.fbnn.dok">fbnn</a>
+       <ul>
+              <li><a href="#fbnn.fbnn.Dropout.dok">Dropout</a></li>
+              <li><a href="#fbnn.fbnn.Optim.dok">Optim</a></li>
+              <li><a href="#fbnn.fbnn.Probe.dok">Probe</a></li>
+              <li><a href="#fbnn.fbnn.SparseLinear.dok">SparseLinear</a></li>
+              <li><a href="#fbnn.fbnn.TrueNLLCriterion.dok">TrueNLLCriterion</a></li>
+       </ul>
+       </li>
+</ul>
+</div>
+<section>
+<div class='docSection'><a name="fbnn.README.dok"></a><p><a id="fbnn.README.`fbnn`"></a></p>
+
+<h1><code>fbnn</code></h1>
+
+<p>Facebook&#39;s extensions to <a href="https://github.com/torch/nn">https://github.com/torch/nn</a>.</p>
+
+<p>This is an early release version to allow the community early access.
+Expect rapid improvements (CMake scripts, LuaRocks, documentation, etc).</p>
+
+<p><a id="fbnn.README.License"></a></p>
+
+<h2>License</h2>
+
+<p><code>fbnn</code> is BSD-licensed. We also provide an additional patent
+grant.</p>
+</div><div class='docSection'><a name="fbnn.fbnn.Dropout.dok"></a><h3>Dropout.lua</h3>
+
+<p>Copyright 2004-present Facebook. All Rights Reserved.</p>
+
+<p><a name="fbnn.Dropout.dok"></a></p>
+
+<h2>fbnn.Dropout</h2>
+
+<p>A faster variant of <code>nn.Dropout</code> that uses the <code>fblualib</code> asynchronous RNG.</p>
+
+<p><a class="entityLink" href="https://github.com/facebook/fbnn/blob/26f2da656f463063a33e5a4c402d74e9d42f47bb/fbnn/Dropout.lua#L23">[src]</a>
+<a name="fbnn.Dropout"></a></p>
+
+<h3>fbnn.Dropout(p)</h3>
+
+<p>Parameter:</p>
+
+<ul>
+<li><code>p</code>: the dropout probability (the probability that a given activation will be dropped)</li>
+</ul>
+
+<h4>Undocumented methods</h4>
+
+<p><a name="fbnn.Dropout:updateOutput"></a></p>
+
+<ul>
+<li><code>fbnn.Dropout:updateOutput(input)</code>
+<a name="fbnn.Dropout:updateGradInput"></a></li>
+<li><code>fbnn.Dropout:updateGradInput(input, gradOutput)</code>
+<a name="fbnn.Dropout:setp"></a></li>
+<li><code>fbnn.Dropout:setp(p)</code></li>
+</ul>
+</div><div class='docSection'><a name="fbnn.fbnn.Optim.dok"></a><h3>Optim.lua</h3>
+
+<p>Copyright 2004-present Facebook. All Rights Reserved.</p>
+
+<p><a name="fbnn.Optim.dok"></a></p>
+
+<h2>fbnn.Optim</h2>
+
+<p><a class="entityLink" href="https://github.com/facebook/fbnn/blob/26f2da656f463063a33e5a4c402d74e9d42f47bb/fbnn/Optim.lua#L28">[src]</a>
+<a name="fbnn.Optim.weight_bias_parameters"></a></p>
+
+<h3>fbnn.Optim.weight_bias_parameters(module)</h3>
+
+<p>Returns weight parameters and bias parameters and associated grad parameters
+for this module. Annotates the return values with flag marking parameter set
+as bias parameters set</p>
+
+<p><a class="entityLink" href="https://github.com/facebook/fbnn/blob/26f2da656f463063a33e5a4c402d74e9d42f47bb/fbnn/Optim.lua#L44">[src]</a>
+<a name="fbnn.Optim"></a></p>
+
+<h3>fbnn.Optim(model, optState, checkpoint_data)</h3>
+
+<p>The regular <code>optim</code> package relies on <code>getParameters</code>, which is a
+beastly abomination before all. This <code>optim</code> package uses separate
+optim state for each submodule of a <code>nn.Module</code>.</p>
+
+<h4>Undocumented methods</h4>
+
+<p><a name="fbnn.Optim:save"></a></p>
+
+<ul>
+<li><code>fbnn.Optim:save()</code>
+<a name="fbnn.Optim:type"></a></li>
+<li><code>fbnn.Optim:type(t)</code>
+<a name="fbnn.Optim:optimize"></a></li>
+<li><code>fbnn.Optim:optimize(optimMethod, inputs, targets, criterion)</code>
+<a name="fbnn.Optim:setParameters"></a></li>
+<li><code>fbnn.Optim:setParameters(newParams)</code></li>
+</ul>
+</div><div class='docSection'><a name="fbnn.fbnn.Probe.dok"></a><p><a name="fbnn.Probe.dok"></a></p>
+
+<h2>fbnn.Probe</h2>
+
+<h4>Undocumented methods</h4>
+
+<p><a name="fbnn.Probe"></a></p>
+
+<ul>
+<li><code>fbnn.Probe(module, name)</code>
+<a name="fbnn.Probe:reset"></a></li>
+<li><code>fbnn.Probe:reset(stdv)</code>
+<a name="fbnn.Probe:resetTensors"></a></li>
+<li><code>fbnn.Probe:resetTensors()</code>
+<a name="fbnn.Probe:setTensors"></a></li>
+<li><code>fbnn.Probe:setTensors()</code>
+<a name="fbnn.Probe:dumpModule"></a></li>
+<li><code>fbnn.Probe:dumpModule(name, input, ...)</code>
+<a name="fbnn.Probe:updateOutput"></a></li>
+<li><code>fbnn.Probe:updateOutput(input)</code>
+<a name="fbnn.Probe:updateGradInput"></a></li>
+<li><code>fbnn.Probe:updateGradInput(input, gradOutput)</code>
+<a name="fbnn.Probe:accGradParameters"></a></li>
+<li><code>fbnn.Probe:accGradParameters(input, gradOutput, scale)</code></li>
+</ul>
+</div><div class='docSection'><a name="fbnn.fbnn.SparseLinear.dok"></a><p><a name="fbnn.SparseLinear.dok"></a></p>
+
+<h2>fbnn.SparseLinear</h2>
+
+<p>A faster variant of <code>nn.SparseLinear</code> that imposes stricter
+preconditions to speed up <code>updateParameters</code>.</p>
+
+<h4>Undocumented methods</h4>
+
+<p><a name="fbnn.SparseLinear"></a></p>
+
+<ul>
+<li><code>fbnn.SparseLinear(inputSize, outputSize, useSparseUpdate)</code>
+<a name="fbnn.SparseLinear:updateParameters"></a></li>
+<li><code>fbnn.SparseLinear:updateParameters(learningRate)</code>
+<a name="fbnn.SparseLinear:zeroGradParameters"></a></li>
+<li><code>fbnn.SparseLinear:zeroGradParameters()</code></li>
+</ul>
+</div><div class='docSection'><a name="fbnn.fbnn.TrueNLLCriterion.dok"></a><h3>TrueNLLCriterion.lua</h3>
+
+<p>Copyright 2004-present Facebook. All Rights Reserved.</p>
+
+<p><a name="fbnn.TrueNLLCriterion.dok"></a></p>
+
+<h2>fbnn.TrueNLLCriterion</h2>
+
+<p><code>TrueNLLCriterion</code> computes the negative log-loss criterion directly.</p>
+
+<h4>Undocumented methods</h4>
+
+<p><a name="fbnn.TrueNLLCriterion"></a></p>
+
+<ul>
+<li><code>fbnn.TrueNLLCriterion()</code>
+<a name="fbnn.TrueNLLCriterion:updateOutput"></a></li>
+<li><code>fbnn.TrueNLLCriterion:updateOutput(input, target)</code>
+<a name="fbnn.TrueNLLCriterion:updateGradInput"></a></li>
+<li><code>fbnn.TrueNLLCriterion:updateGradInput(input, target)</code></li>
+</ul>
+</div>
+</section>
+</div>
+</body>
+</html>
